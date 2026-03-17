@@ -46,13 +46,13 @@ class BaseAuthService(ABC):
 
 class AuthService(BaseAuthService):
 
-    def __init__(self, user_repository: UserRepositiry):
+    def __init__(self, user_repository: UserRepository):
         self._user_repository = user_repository
 
     async def login(self, username: str, password: str) -> Optional[UserDTO]:
-        users = self._user_repository.get_all(username=username)
+        users = await self._user_repository.get_all(username=username)
         for user in users:
-            if self._veryfy_password(password, user.hashed_password):
+            if self._verify_password(password, user.hashed_password):
                 return user
         return None
 
@@ -66,19 +66,17 @@ class AuthService(BaseAuthService):
         return user
 
     async def get_user_by_id(self, user_id: str) -> Optional[UserDTO]:
-        return self._user_repository.get_one(user_id)
+        return await self._user_repository.get_one(user_id)
 
     @staticmethod
-    def _hash_password(self, password: str) -> str:
-        ctx = CryptContext(schemes=["bcrypt"], deprecated="auto")
-        hashed_password = ctx.hash(password)
-        return hashed_password
+    def _hash_password(password: str) -> str:
+        ctx = CryptContext(schemes=["argon2"], deprecated="auto")
+        return ctx.hash(password)
 
     @staticmethod
     def _verify_password(password: str, hashed_password: str) -> bool:
-        ctx = CryptContext(schemes=["bcrypt"], deprecated="auto")
-        is_verified = ctx.verify(password, hashed_password)
-        return is_verified
+        ctx = CryptContext(schemes=["argon2"], deprecated="auto")
+        return ctx.verify(password, hashed_password)
 
 
 class InMemoryUserRepository(UserRepository):
