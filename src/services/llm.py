@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import cast
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -6,7 +7,13 @@ from langchain_core.prompts import MessagesPlaceholder
 from langchain_mistralai import ChatMistralAI
 from langchain_openai import ChatOpenAI
 
-from .message import AnswerDTO, QuestionDTO
+from .message import QuestionDTO
+
+
+@dataclass
+class AnswerDTO:
+    text: str
+    used_tokens: int
 
 
 class LLMService(ABC):
