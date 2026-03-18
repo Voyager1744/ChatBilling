@@ -15,7 +15,6 @@ class UserDTO:
 
 
 class UserRepository(ABC):
-
     @abstractmethod
     async def get_one(self, username: str) -> Optional[UserDTO]:
         raise NotImplementedError
@@ -30,7 +29,6 @@ class UserRepository(ABC):
 
 
 class BaseAuthService(ABC):
-
     @abstractmethod
     async def login(self, username: str, password: str) -> Optional[UserDTO]:
         raise NotImplementedError
@@ -45,7 +43,6 @@ class BaseAuthService(ABC):
 
 
 class AuthService(BaseAuthService):
-
     def __init__(self, user_repository: UserRepository):
         self._user_repository = user_repository
 

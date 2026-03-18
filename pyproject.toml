@@ -5,16 +5,18 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "bcrypt>=5.0.0",
+    "argon2-cffi>=25.1.0",
     "fastapi>=0.135.1",
     "langchain>=1.2.12",
     "langchain-mistralai>=1.1.2",
     "langchain-openai>=1.1.11",
     "passlib>=1.7.4",
+    "uvicorn>=0.42.0",
 ]
 
 [dependency-groups]
 dev = [
     "isort>=8.0.1",
+    "mypy>=1.19.1",
     "ruff>=0.15.6",
 ]
